@@ -14,7 +14,13 @@
     import FilledValueSlider from "./components/Slider/FilledValueSlider.svelte";
     import Rating from "./components/Radio/Rating.svelte";
     import Select from "./components/DropDown/Select.svelte";
+    import Modal from "./components/Modal/Modal.svelte";
+    import Menu from "./components/Modal/Menu.svelte";
+    import MenuButton from "./components/Modal/MenuButton.svelte";
 
+    let toggle1;
+    let toggle2;
+    let openModal;
 </script>
 
 <FilledCheckBox />
@@ -30,5 +36,18 @@
 <DecimalInput />
 <ValueSlider />
 <FilledValueSlider />
-<Select name="select" options={[1, 2, 3]}/>
+<Select name="select" options={[1, 2, 3]} />
 <Rating name="rating" />
+<Menu bind:toggle={toggle1}>
+    <p>Hello world!</p>
+</Menu>
+<Menu bind:toggle={toggle2}>
+    <p>Hello Dude!</p>
+</Menu>
+
+<MenuButton toggle={toggle1} />
+<MenuButton toggle={toggle2} />
+
+<Modal bind:open={openModal} />
+
+<button on:click={openModal}>open</button>
