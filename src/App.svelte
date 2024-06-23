@@ -18,6 +18,7 @@
     import Menu from "./components/Modal/Menu.svelte";
     import MenuButton from "./components/Modal/MenuButton.svelte";
     import Table from "./components/Table/Table.svelte";
+    import TableSwitch from "./components/Table/TableSwitch.svelte";
 
     let toggle1;
     let toggle2;
@@ -25,12 +26,12 @@
     let resultCount;
 
     let search = "";
-    $: filtering = (row) => row.ho.includes(search)
+    $: filtering = (row) => row.name.includes(search);
 </script>
 
 <FilledCheckBox />
 <CheckBox />
-<Switch />
+<Switch checked={false} />
 <HamburgerButton />
 <CollapsibleSection />
 <CloseButton />
@@ -59,20 +60,24 @@
 
 <Table
     headers={[
-        { name: "Ho", cellContent: { type: Switch , props: (row) => [] } },
-        { name: "Hi", sorting: (row1, row2) => row1.hi - row2.hi, cellContent: (row) => row.hi },
-        { name: "He", cellContent: (row) => row.he },
+        { name: "", cellContent: TableSwitch },
+        {
+            name: "Name",
+            sorting: (row1, row2) => row1.value - row2.value,
+            cellContent: (row) => row.value,
+        },
+        { name: "Value", cellContent: (row) => row.name },
     ]}
     rows={[
-        { hi: 0, ho: "abc", he: "hij" },
-        { hi: 1, ho: "def", he: "hij" },
-        { hi: 2, ho: "hij", he: "hij" },
-        { hi: 3, ho: "klm", he: "hij" },
-        { hi: 4, ho: "nop", he: "hij" },
-        { hi: 5, ho: "qrs", he: "hij" },
-        { hi: 6, ho: "tuv", he: "hij" },
-        { hi: 7, ho: "wxy", he: "hij" },
-        { hi: 8, ho: "z", he: "hij" },
+        { value: 0, name: "abc", selected: false },
+        { value: 1, name: "def", selected: false },
+        { value: 2, name: "hij", selected: false },
+        { value: 3, name: "klm", selected: false },
+        { value: 4, name: "nop", selected: false },
+        { value: 5, name: "qrs", selected: false },
+        { value: 6, name: "tuv", selected: false },
+        { value: 7, name: "wxy", selected: false },
+        { value: 8, name: "z", selected: false },
     ]}
     bind:filtering
     bind:resultCount

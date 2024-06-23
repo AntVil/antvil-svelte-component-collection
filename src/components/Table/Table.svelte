@@ -1,3 +1,8 @@
+<!--
+@component
+A `Table` which supports sorting, filtering and paging it's content.
+-->
+
 <script>
     export let headers = [];
     export let rows = [];
@@ -6,7 +11,7 @@
     export let limit = Infinity;
     export let resultCount = 0;
 
-    const SORTED_BY = Symbol("sortedBy");
+    const SORTED_BY = Symbol("sorted by");
     const SORTED_ASC = Symbol("sorted asc");
     const SORTED_DESC = Symbol("sorted desc");
 
@@ -57,13 +62,16 @@
             <tr>
                 {#each headers as header}
                     <td>
-                        {#if typeof header.cellContent === "function"}
-                            {header.cellContent(row)}
-                        {:else}
+                        <!-- svelte-components are classes so they have a `prototype` property -->
+                        {#if header.cellContent.prototype && header.cellContent.prototype.constructor}
+                            <!-- Content is a svelte-component -->
                             <svelte:component
-                                this={header.cellContent.type}
-                                {...header.cellContent.props(row)}
+                                this={header.cellContent}
+                                bind:row
                             />
+                        {:else}
+                            <!-- Content is a simple text-node -->
+                            {header.cellContent(row)}
                         {/if}
                     </td>
                 {/each}
